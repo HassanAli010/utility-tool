@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utility Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(450deg, #1e90ff, #faa287);
+      color: #fff;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      margin: 20px 0;
+      font-size: 24px;
+      color: #ffd700;
+    }
+    .btn {
+      padding: 10px 20px;
+      margin: 10px;
+      background: #ffd700;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .btn:hover {
+      background: #ff9900;
+    }
+    .input {
+      padding: 10px;
+      width: 80%;
+      margin: 10px auto;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      display: block;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Utility Tool</h1>
+    <select id="operation" class="input">
+      <option value="1">Basic Arithmetic (+, -, *, /)</option>
+      <option value="2">Currency Conversion</option>
+      <option value="3">Weight Conversion (kg to grams)</option>
+      <option value="4">Temperature Conversion (Celsius to Fahrenheit)</option>
+    </select>
+    <button class="btn" onclick="performOperation()">Perform Operation</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function performOperation() {
+      const operation = document.getElementById('operation').value;
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = ''; // Clear previous results
+
+      if (operation === '1') {
+        let num1 = parseFloat(prompt("Enter the first number:"));
+        let num2 = parseFloat(prompt("Enter the second number:"));
+        let op = prompt("Enter operation (+, -, *, /):");
+        let result;
+
+        if (op === '+') result = num1 + num2;
+        else if (op === '-') result = num1 - num2;
+        else if (op === '*') result = num1 * num2;
+        else if (op === '/') result = num2 !== 0 ? num1 / num2 : "Division by zero is not allowed";
+        else result = "Invalid Operation";
+
+        resultDiv.innerHTML = `<strong>Result:</strong> ${result}`;
+      }
+
+      else if (operation === '2') {
+        let currencyChoice = prompt("Choose:\n1. Dollar to Rupee\n2. Rupee to Dollar\n3. Dollar to Euro\n4. Euro to Dollar\n5. PKR to Dollar\n6. Dollar to PKR");
+        let amount = parseFloat(prompt("Enter the amount:"));
+        let result;
+        const exchangeRates = {
+          dollarToRupee: 84.08,
+          rupeeToDollar: 1 / 84.08,
+          dollarToEuro: 0.91,
+          euroToDollar: 1 / 0.91,
+          pkrToDollar: 0.0036,
+          dollarToPkr: 278.90,
+        };
+
+        switch (currencyChoice) {
+          case '1':
+            result = amount * exchangeRates.dollarToRupee + " Rupees";
+            break;
+          case '2':
+            result = amount * exchangeRates.rupeeToDollar + " Dollars";
+            break;
+          case '3':
+            result = amount * exchangeRates.dollarToEuro + " Euros";
+            break;
+          case '4':
+            result = amount * exchangeRates.euroToDollar + " Dollars";
+            break;
+          case '5':
+            result = amount * exchangeRates.pkrToDollar + " Dollars";
+            break;
+          case '6':
+            result = amount * exchangeRates.dollarToPkr + " PKR";
+            break;
+          default:
+            result = "Invalid currency choice";
+        }
+
+        resultDiv.innerHTML = `<strong>Result:</strong> ${result}`;
+      }
+
+      else if (operation === '3') {
+        let kg = parseFloat(prompt("Enter the weight in kilograms:"));
+        if (!isNaN(kg)) {
+          resultDiv.innerHTML = `<strong>Result:</strong> ${kg * 1000} grams`;
+        } else {
+          resultDiv.innerHTML = "Invalid input for weight";
+        }
+      }
+
+      else if (operation === '4') {
+        let cs = parseFloat(prompt("Enter the temperature in Celsius:"));
+        if (!isNaN(cs)) {
+          let fh = (cs * (9 / 5) + 32).toFixed(2);
+          resultDiv.innerHTML = `<strong>Result:</strong> ${fh} Fahrenheit`;
+        } else {
+          resultDiv.innerHTML = "Invalid input for temperature";
+        }
+      }
+
+      else {
+        resultDiv.innerHTML = "Invalid Choice";
+      }
+    }
+  </script>
+</body>
+</html>
